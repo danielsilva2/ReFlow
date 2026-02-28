@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-reflow-emerald: #2D6A4F;
+  --color-reflow-ice: #F8F9FA;
+  --color-reflow-anthracite: #343A40;
+  --color-reflow-alert: #FFCA28;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-reflow-ice);
+  color: var(--color-reflow-anthracite);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dark body {
+  background-color: #121212;
+  color: #F8F9FA;
+}

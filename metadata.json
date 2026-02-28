@@ -1,0 +1,8 @@
+{
+  "name": "ReFlow",
+  "description": "Sistema moderno e dinâmico para gestão de reciclagem com foco em geolocalização e processos.",
+  "requestFramePermissions": [
+    "geolocation",
+    "camera"
+  ]
+}
