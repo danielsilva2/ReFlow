@@ -56,9 +56,25 @@ export default function DisposalFlow() {
     if (videoRef.current && canvasRef.current) {
       const context = canvasRef.current.getContext('2d');
       if (context) {
-        canvasRef.current.width = videoRef.current.videoWidth;
-        canvasRef.current.height = videoRef.current.videoHeight;
-        context.drawImage(videoRef.current, 0, 0);
+        // Fallback dimensions if video is not playing
+        const width = videoRef.current.videoWidth || 640;
+        const height = videoRef.current.videoHeight || 480;
+        
+        canvasRef.current.width = width;
+        canvasRef.current.height = height;
+        
+        if (videoRef.current.videoWidth > 0) {
+          context.drawImage(videoRef.current, 0, 0);
+        } else {
+          // Draw a placeholder if camera failed
+          context.fillStyle = '#2D6A4F';
+          context.fillRect(0, 0, width, height);
+          context.fillStyle = '#FFFFFF';
+          context.font = '24px sans-serif';
+          context.textAlign = 'center';
+          context.fillText('Foto Simulada (Câmera Indisponível)', width / 2, height / 2);
+        }
+        
         setPhoto(canvasRef.current.toDataURL('image/jpeg'));
         stopCamera();
       }
@@ -74,20 +90,45 @@ export default function DisposalFlow() {
     if (step === 2) {
       // Get location before moving to step 3
       setIsLocating(true);
+      
+      let locationFound = false;
+
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            setLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
+        // Fallback timeout to prevent hanging
+        const timeoutId = setTimeout(() => {
+          if (!locationFound) {
+            locationFound = true;
+            console.warn("Geolocation timeout, using fallback");
+            setLocation({ lat: -23.5505, lng: -46.6333 });
             setIsLocating(false);
             setStep(3);
+          }
+        }, 3000);
+
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            if (!locationFound) {
+              locationFound = true;
+              clearTimeout(timeoutId);
+              setLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
+              setIsLocating(false);
+              setStep(3);
+            }
           },
           (error) => {
-            console.error("Error getting location", error);
-            alert("Ative a localização para continuar.");
-            setIsLocating(false);
-          }
+            if (!locationFound) {
+              locationFound = true;
+              clearTimeout(timeoutId);
+              console.error("Error getting location", error);
+              setLocation({ lat: -23.5505, lng: -46.6333 }); // Fallback
+              setIsLocating(false);
+              setStep(3);
+            }
+          },
+          { timeout: 3000, maximumAge: 10000 }
         );
       } else {
+        setLocation({ lat: -23.5505, lng: -46.6333 });
         setIsLocating(false);
         setStep(3); // Proceed anyway for demo
       }
