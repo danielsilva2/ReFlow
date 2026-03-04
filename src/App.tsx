@@ -9,6 +9,7 @@ import ProfileSetup from './pages/ProfileSetup';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { DataProvider } from './contexts/DataContext';
 import { ToastProvider } from './contexts/ToastContext';
+import ScreenReaderWidget from './components/ScreenReaderWidget';
 
 // Protected Route Wrapper
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -30,6 +31,7 @@ export default function App() {
     <ToastProvider>
       <AuthProvider>
         <DataProvider>
+          <ScreenReaderWidget />
           <Router>
             <Routes>
               <Route path="/login" element={<Login />} />

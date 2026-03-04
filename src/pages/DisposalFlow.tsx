@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Camera, MapPin, CheckCircle, ArrowRight, X, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { Camera, MapPin, CheckCircle, ArrowRight, X, Image as ImageIcon, Loader2, MessageCircle, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useData } from '../contexts/DataContext';
@@ -353,13 +353,29 @@ export default function DisposalFlow() {
                 <CheckCircle className="w-12 h-12 text-reflow-emerald dark:text-emerald-400" />
               </div>
               <h2 className="text-3xl font-bold text-reflow-anthracite dark:text-white mb-2">Coleta Solicitada!</h2>
-              <p className="text-gray-500 dark:text-gray-400 mb-12 max-w-xs">
-                Um coletor próximo foi notificado e está a caminho do seu endereço.
+              <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-xs">
+                Um coletor próximo foi notificado e logo aceitará sua solicitação.
               </p>
+
+              {/* Estimated Time */}
+              <div className="w-full bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-4 mb-8 flex items-center justify-between border border-emerald-100 dark:border-emerald-800">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-800 flex items-center justify-center">
+                    <Clock className="w-5 h-5 text-reflow-emerald dark:text-emerald-400" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-xs text-emerald-600 dark:text-emerald-500 font-semibold uppercase tracking-wider">Previsão de Coleta</p>
+                    <p className="font-bold text-reflow-anthracite dark:text-white">Hoje, 14:30 - 15:30</p>
+                  </div>
+                </div>
+                <button className="w-10 h-10 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-reflow-emerald dark:hover:text-emerald-400 hover:border-reflow-emerald dark:hover:border-emerald-500 transition-colors shadow-sm">
+                  <MessageCircle className="w-5 h-5" />
+                </button>
+              </div>
 
               {/* Uber-style status bar */}
               <div className="w-full bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm relative overflow-hidden transition-colors">
-                <div className="absolute top-0 left-0 w-1/3 h-1 bg-reflow-emerald animate-pulse" />
+                <div className="absolute top-0 left-0 w-1/4 h-1 bg-reflow-emerald animate-pulse" />
                 
                 <div className="flex items-center justify-between relative z-10">
                   <div className="flex flex-col items-center gap-2">
@@ -369,16 +385,25 @@ export default function DisposalFlow() {
                     <span className="text-xs font-bold text-reflow-emerald dark:text-emerald-400">Solicitado</span>
                   </div>
                   
-                  <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600 mx-2" />
+                  <div className="flex-1 h-px bg-gray-300 dark:bg-gray-600 mx-1" />
                   
                   <div className="flex flex-col items-center gap-2">
                     <div className="w-8 h-8 rounded-full bg-white dark:bg-gray-800 border-2 border-reflow-alert text-reflow-alert flex items-center justify-center shadow-sm">
                       <div className="w-2 h-2 rounded-full bg-reflow-alert animate-ping" />
                     </div>
-                    <span className="text-xs font-bold text-reflow-anthracite dark:text-white">A Caminho</span>
+                    <span className="text-xs font-bold text-reflow-anthracite dark:text-white">Aceito</span>
                   </div>
                   
-                  <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700 mx-2" />
+                  <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700 mx-1" />
+
+                  <div className="flex flex-col items-center gap-2 opacity-50">
+                    <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 text-gray-400 dark:text-gray-500 flex items-center justify-center">
+                      <div className="w-2 h-2 rounded-full bg-gray-400 dark:bg-gray-500" />
+                    </div>
+                    <span className="text-xs font-bold text-gray-500 dark:text-gray-400 text-center leading-tight">A<br/>Caminho</span>
+                  </div>
+                  
+                  <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700 mx-1" />
                   
                   <div className="flex flex-col items-center gap-2 opacity-50">
                     <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 text-gray-400 dark:text-gray-500 flex items-center justify-center">
@@ -391,7 +416,7 @@ export default function DisposalFlow() {
 
               <button 
                 onClick={() => navigate('/map')}
-                className="mt-12 w-full py-4 rounded-xl font-bold text-reflow-emerald dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors"
+                className="mt-8 w-full py-4 rounded-xl font-bold text-reflow-emerald dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-colors"
               >
                 Voltar ao Mapa
               </button>

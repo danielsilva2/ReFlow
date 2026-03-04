@@ -24,3 +24,21 @@ body {
   background-color: #121212;
   color: #F8F9FA;
 }
+
+/* VLibras Customization */
+[vw] {
+  left: auto !important;
+  right: 0 !important;
+  top: 25% !important;
+  transform: translateY(-50%) !important;
+}
+
+[vw-access-button] {
+  background-color: #3b82f6 !important; /* Azul claro / blue-500 */
+  border-radius: 8px 0 0 8px !important;
+}
+
+[vw-plugin-wrapper] {
+  left: auto !important;
+  right: 0 !important;
+}
